@@ -4,7 +4,6 @@ if [ -f `brew --prefix`/etc/bash_completion ]; then
 fi
 
 alias spandev='ssh ukiseru@pandev01.pearsondev.com'
-alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias ctags="`brew --prefix`/bin/ctags"
 alias ll="ls -al"
 alias info="info --vi-keys"
