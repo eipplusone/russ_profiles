@@ -20,14 +20,14 @@ call vundle#begin()
   " syntax checker
   Plugin 'scrooloose/syntastic'
 
-  " Python autocompletion
-  Plugin 'davidhalter/jedi-vim'
-
   " Colorschemes
   Plugin 'flazz/vim-colorschemes'
 
   " Fuzzy search
   Plugin 'kien/ctrlp.vim'
+
+  "Autocomplete
+  Plugin 'valloric/youcompleteme'
 
   " Easy motions
   Plugin 'Lokaltog/vim-easymotion'
