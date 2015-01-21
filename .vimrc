@@ -134,3 +134,5 @@ map j gj
 map k gk
 
 let g:solarized_termcolors=256
+
+let g:clang_user_options='|| exit 0' " fix clang autocomplete issue
