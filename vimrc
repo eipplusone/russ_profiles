@@ -10,6 +10,14 @@ call vundle#begin()
   " let Vundle manage Vundle, required
   Plugin 'gmarik/Vundle.vim'
 
+  Plugin 'ervandew/supertab'
+
+  " New text objects
+  Plugin 'kana/vim-textobj-user'
+  Plugin 'kana/vim-textobj-line'
+
+  Plugin 'bogado/file-line'
+
   " The following are examples of different formats supported.
   " Keep Plugin commands between vundle#begin/end.
   " plugin on GitHub repo
@@ -17,8 +25,36 @@ call vundle#begin()
   " plugin from http://vim-scripts.org/vim/scripts.html
   Plugin 'vim-scripts/proton'
 
+  Plugin 'vim-scripts/vim-auto-save'
+
+  Plugin 'Valloric/YouCompleteMe'
+
+  "Another through file search
+  Plugin 'Shougo/unite.vim'
+
+  " Undo tree
+  Plugin 'simnalamburt/vim-mundo'
+
+  " Silver searcher implementation
+  Plugin 'rking/ag.vim'
+
+  " Chef integration
+  Plugin 't9md/vim-chef'
+
+  " Jedi autocomplete
+  Plugin 'davidhalter/jedi-vim'
+
   " syntax checker
   Plugin 'scrooloose/syntastic'
+
+  "Scala support
+  Plugin 'derekwyatt/vim-scala'
+
+  "Commenting
+  Plugin 'tpope/vim-commentary'
+
+  "Surrounding
+  Plugin 'tpope/vim-surround'
 
   " Colorschemes
   Plugin 'flazz/vim-colorschemes'
@@ -26,23 +62,26 @@ call vundle#begin()
   " Fuzzy search
   Plugin 'kien/ctrlp.vim'
 
-  "Autocomplete
-  Plugin 'valloric/youcompleteme'
+  "Trello integration
+  Plugin 'malithsen/trello-vim'
 
   " Easy motions
   Plugin 'Lokaltog/vim-easymotion'
 
   " Templates
   Plugin 'aperezdc/vim-template'
-  
+
   " Simplenote integration
   Plugin 'mrtazz/simplenote.vim'
+
+  " Pair programming
+  Plugin 'floobits/floobits-neovim'
 
   " XML integration
   Plugin 'sukima/xmledit'
 
-  "Explorer
-  Plugin 'scrooloose/nerdtree'
+  " Ruby support
+  Plugin 'vim-ruby/vim-ruby'
 
   " All of your Plugins must be added before the following line
   call vundle#end()            " required
@@ -51,13 +90,13 @@ call vundle#begin()
 scriptencoding utf-8           " utf-8 all the way
 set encoding=utf-8
 
+set number
+
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard=unnamed          " Yanks go on clipboard instead.
 set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
-
-:au FocusLost * silent! :wa            " Autosave
 
 set autowrite                  " Writes on make/shell commands
 set autoread
@@ -107,6 +146,8 @@ set cinwords+=for,switch,case
 set mouse=a "enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
 
+set wildignorecase
+
 set novisualbell              " No blinking
 set noerrorbells              " No noise.
 set vb t_vb=                  " disable any beeps or flashes on error
@@ -117,6 +158,8 @@ colorscheme solarized            " Colorscheme of choice
 
 set nohlsearch                " no highlighting of things I've searched
 
+set wildignorecase
+
 " Syntastic settings
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
@@ -124,7 +167,6 @@ let g:syntastic_perl_checkers = ['perl', 'podchecker']
 " Make vim 256 colors by default
 set t_Co=256
 
-let mapleader=","
 map <Leader> <Plug>(easymotion-prefix)
 
 map <F5> tabe ~/.vimrc
@@ -133,6 +175,20 @@ map <F5> tabe ~/.vimrc
 map j gj
 map k gk
 
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
 let g:solarized_termcolors=256
 
-let g:clang_user_options='|| exit 0' " fix clang autocomplete issue
+let g:ctrlp_show_hidden = 1 " CtrlP shows hidden files
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#source('file,file/new,buffer,file_rec,line', 'matchers', 'matcher_fuzzy')
+
+" :tnoremap <C-l> <C-\><C-n>
+" :tnoremap <C-W> <C-\><C-n><C-W>
+
+nnoremap <C-k> :<C-u>Unite -buffer-name=search -start-insert line<cr>
